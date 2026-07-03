@@ -39,7 +39,7 @@ class ClienteListView(LoginRequiredMixin, AdminOMecanicoMixin, ListView):
 class ClienteCreateView(LoginRequiredMixin, AdminOMecanicoMixin, CreateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'cliente/crear.html'
+    template_name = 'Cliente/crear.html'
     success_url = reverse_lazy('app:listar_clientes')
 
     def get_context_data(self, **kwargs):
@@ -61,7 +61,7 @@ class ClienteCreateView(LoginRequiredMixin, AdminOMecanicoMixin, CreateView):
 class ClienteUpdateView(LoginRequiredMixin, AdminOMecanicoMixin, UpdateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'cliente/crear.html'
+    template_name = 'Cliente/crear.html'
     success_url = reverse_lazy('app:listar_clientes')
 
     def get_context_data(self, **kwargs):
@@ -82,7 +82,7 @@ class ClienteUpdateView(LoginRequiredMixin, AdminOMecanicoMixin, UpdateView):
 # ── 4. ELIMINAR — Solo Admin ──────────────────────────────────────
 class ClienteDeleteView(LoginRequiredMixin, SoloAdminMixin, DeleteView):
     model = Cliente
-    template_name = 'cliente/eliminar.html'
+    template_name = 'Cliente/eliminar.html'
     success_url = reverse_lazy('app:listar_clientes')
 
     def delete(self, request, *args, **kwargs):
