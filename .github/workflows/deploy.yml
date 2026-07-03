@@ -1,0 +1,59 @@
+name: Integración Continua
+
+on:
+  push:
+    branches: ["main", "master"]
+
+jobs:
+  testeo:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: proyectoo
+          MYSQL_ROOT_PASSWORD: 1234567890
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Obtener el codigo
+        uses: actions/checkout@v4
+
+      - name: configurar python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: instalar dependencias del sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-libmysqlclient-dev pkg-config \
+            libcairo2-dev libpango-1.0-0 libpangocairo-1.0-0 \
+            libpangoft2-1.0-0 libgdk-pixbuf-2.0-0 libffi-dev shared-mime-info fonts-liberation
+
+      - name: instalar dependencias
+        run: |
+          cd sena
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-django
+
+      - name: ejecutar pruebas
+        env:
+          SECRET_KEY: clave-temporal-para-ci
+          DEBUG: "False"
+          DB_NAME: proyectoo
+          DB_USER: root
+          DB_PASSWORD: 1234567890
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+        run: |
+          cd sena
+          pytest app/tests.py --ds=sena.settings
