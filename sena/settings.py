@@ -66,7 +66,7 @@ WSGI_APPLICATION = 'sena.wsgi.application'
 # ========== BASE DE DATOS MySQL ==========
 DATABASES = {
     'default': {
-        'ENGINE':   'django.db.backends.mysql',
+        'ENGINE':   'django.db.backends.sql3',
         'NAME':     os.environ.get('DB_NAME', 'proyectoo'),
     }
 }
