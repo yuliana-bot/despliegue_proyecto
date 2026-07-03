@@ -2,7 +2,7 @@
 # Dockerfile para una aplicación Django
 # ------------------------------------------------------------
 # Etapa 1: Imagen Base
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 # Etapa 2: Variables de Entorno
 ENV PYTHONDONTWRITEBYTECODE 1
